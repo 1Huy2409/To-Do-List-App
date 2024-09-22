@@ -2,49 +2,30 @@
 //2. khoi tao the li trong the ul voi noi dung vua tao
 //3. day the li vao cap the ul
 
-let inputTask = document.getElementById('inp');
-let inputAdd = document.getElementById('add');
-let checkTask = document.getElementById('check-btn');
-let taskList = document.querySelector('.task-list');
+const inputTask = document.getElementById('inp');
+const inputAdd = document.getElementById('add');
+const checkTask = document.getElementById('check-btn');
+const taskList = document.querySelector('.task-list');
 function createElm() {
     let item = document.createElement('li');
     item.classList.add('task-list-item');
-    let inputCheck = document.createElement('input');
-    inputCheck.id = 'check-btn';
-    inputCheck.type = 'checkbox';
     //khoi tao the span
-    let spanText = document.createElement('span');
-    spanText.classList.add('task-content');
+    let pText = document.createElement('p');
+    pText.classList.add('task-content');
     let textNode = document.createTextNode(inputTask.value);
-    spanText.appendChild(textNode);
-    let rulerRemove = document.createElement('div');
-    rulerRemove.classList.add('remove-ruler');
-    spanText.appendChild(rulerRemove);
-    let deleteDiv = document.createElement("div");
-    deleteDiv.classList.add("delete-icon");
-    var icon = document.createElement("i");
-    icon.classList.add("ti-close"); // sử dụng icon từ thư viện themify
-    deleteDiv.appendChild(icon);
-    item.appendChild(inputCheck);
-    item.appendChild(spanText);
-    item.appendChild(deleteDiv);
+    pText.appendChild(textNode);
+    let deleteSpan = document.createElement("span");
+    deleteSpan.innerHTML = '\u00d7';
+    item.appendChild(pText);
+    item.appendChild(deleteSpan);
     // Tạo thẻ <li> mới
     //them item vao the ul
     taskList.appendChild(item);
-    //event checkbox
-    inputCheck.addEventListener('change', function() {
-        if (inputCheck.checked) {
-            // Nếu checkbox được chọn, thay đổi thuộc tính của remove-ruler
-            rulerRemove.style.display = 'block'; // Ví dụ thay đổi màu nền
-        } else {
-            // Nếu checkbox không được chọn, khôi phục thuộc tính ban đầu
-            rulerRemove.style.display = 'none'; // Trở lại trạng thái ban đầu
-        }
-    });
-    deleteDiv.addEventListener('click', function() {
-        taskList.removeChild(item);
-    })
+    inputTask.value = "";
+    saveTask();
 }
+
+//event click add task
 inputAdd.addEventListener('click', function (e) {
     if (inputTask.value == '') {
         alert("Please enter your task!");
@@ -55,6 +36,37 @@ inputAdd.addEventListener('click', function (e) {
         createElm();
         //reset add task
         inputTask.value = '';
+
     }
 });
 
+taskList.addEventListener('click', function(e) {
+    if (e.target.tagName === "LI" || e.target.tagName === 'P') {
+        e.target.classList.toggle('checked');
+        saveTask();
+    }
+    else if (e.target.tagName === "SPAN") {
+        e.target.parentElement.remove();
+        saveTask();
+    }
+
+}, false);
+// inputCheck.addEventListener('change', function() {
+//     if (inputCheck.checked) {
+//         rulerRemove.style.display = 'block'; 
+//     } else {
+//         rulerRemove.style.display = 'none';
+//     }
+// });
+// deleteDiv.addEventListener('click', function() {
+//     taskList.removeChild(item);
+// })
+// //tao ham luu du lieu cua the ul vao local storage
+
+function saveTask () {
+    localStorage.setItem('data', taskList.innerHTML);
+}
+function getTask() {
+    taskList.innerHTML = localStorage.getItem('data');
+}
+getTask();

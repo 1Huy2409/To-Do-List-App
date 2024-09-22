@@ -12,7 +12,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(45deg, #330867, #30cfd0);
+    background: linear-gradient(135deg, #330867, #30cfd0);
 }
 
 .container {
@@ -79,31 +79,46 @@ body {
     align-items: center;
     line-height: 18px;
     padding: 8px 0;
-}
-.task-content {
-    display: inline-block;
     position: relative;
 }
-.remove-ruler {
-    content: "";
-    display: none;
-    width: 100%;
-    height: 4px;
-    background-color: #ccc;
-    position: absolute;
-    top: 50%;
-    left: 0;
-    z-index: 2;
-    transform: translateY(-50%);
-}
-#check-btn {
-    transform: scale(1.7);
+.task-list-item::before {
     cursor: pointer;
-    margin-right: 8px;
-    margin-top: 0;
-    margin-bottom: 0;
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-image: url(/assets/img/unchecked.png);
+    background-size: cover;
+    background-position: cover;
+}
+.task-list-item.checked::before {
+    background-image: url(/assets/img/checked.png);
+}
+.task-list-item.checked {
+    text-decoration: line-through;
+}
+.task-content {
+    margin-left: 40px;
+    cursor: pointer;
+}
+.task-list-item span {
+    position: absolute;
+    top: -4px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    color: #555;
+    line-height: 40px;
+    text-decoration: none;
+    cursor: pointer;
+    align-items: center;
 }
 .delete-icon {
+    display: block;
+    font-size: 40px;
+    font-weight: 400;
     cursor: pointer;
     margin-left: auto;
     margin-right: 8px;
