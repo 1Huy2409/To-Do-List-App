@@ -88,12 +88,12 @@ body {
     width: 28px;
     height: 28px;
     border-radius: 50%;
-    background-image: url(./assets/img/unchecked.png);
+    background-image: url(/assets/img/unchecked.png);
     background-size: cover;
     background-position: cover;
 }
 .task-list-item.checked::before {
-    background-image: url(./assets/img/checked.png);
+    background-image: url(/assets/img/checked.png);
 }
 .task-list-item.checked {
     text-decoration: line-through;
